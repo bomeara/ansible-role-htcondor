@@ -4,7 +4,7 @@
 
 - name: Copy 'is_cluster_ready' file
   copy: dest=/bin/is_cluster_ready src=is_cluster_ready mode=0755 force=no
-  
+
 - lineinfile: dest=/etc/condor/condor_config regexp=REQUIRE_LOCAL_CONFIG_FILE line="REQUIRE_LOCAL_CONFIG_FILE=TRUE"
   notify: restart htcondor
 
@@ -12,7 +12,7 @@
     content: |
        CONDOR_HOST = htcondoreserver
        BIND_ALL_INTERFACES = FALSE
-       NETWORK_INTERFACE = {{IM_NODE_PRIVATE_IP}}
+       NETWORK_INTERFACE = {{ansible_default_ipv4.address}}
        ALLOW_WRITE = htcondoreserver, {{htcondor_vnode_prefix}}*.localdomain
        DAEMON_LIST = MASTER, COLLECTOR, NEGOTIATOR, SCHEDD
        NEGOTIATOR_INTERVAL = 30
